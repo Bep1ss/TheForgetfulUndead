@@ -48,7 +48,7 @@ namespace InfimaGames.LowPolyShooterPack
         /// <summary>
         /// Attached Rigidbody.
         /// </summary>
-        private Rigidbody rigidBody;
+        public Rigidbody rigidBody;
         /// <summary>
         /// Attached CapsuleCollider.
         /// </summary>
@@ -61,8 +61,10 @@ namespace InfimaGames.LowPolyShooterPack
         /// <summary>
         /// True if the character is currently grounded.
         /// </summary>
-        private bool grounded;
+        public bool grounded;
 
+
+        public float jumpForce = 7f;
         /// <summary>
         /// Player Character.
         /// </summary>

@@ -16,11 +16,17 @@ namespace InfimaGames.LowPolyShooterPack.Interface
         /// </summary>
         protected override void Tick()
         {
-            //Total Ammunition.
-            float ammunitionTotal = equippedWeapon.GetAmmunitionTotal();
-            
-            //Update Text.
-            textMesh.text = ammunitionTotal.ToString(CultureInfo.InvariantCulture);
+            if (equippedWeapon.gameObject.GetComponent<Weapon>())
+            {
+                if (equippedWeapon.gameObject.GetComponent<Weapon>().GetInfiniteReload())
+                {
+                    textMesh.text = "Infinite";
+                }
+                else
+                {
+                    textMesh.text = equippedWeapon.gameObject.GetComponent<Weapon>().reloadAmmunition.ToString();
+                }
+            }
         }
         
         #endregion

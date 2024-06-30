@@ -1,10 +1,13 @@
 using UnityEngine;
 using UnityEngine.AI;
+using InfimaGames.LowPolyShooterPack;
 
 public class Enemy : MonoBehaviour
 {
     public NavMeshAgent agent;
     public Animator animator;
+
+    public Movement movement;
 
     public Transform player;
     BoxCollider boxCollider;
@@ -30,6 +33,8 @@ public class Enemy : MonoBehaviour
 
     private void Awake()
     {
+        movement = FindAnyObjectByType<Movement>();
+        player = movement.gameObject.transform;
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         boxCollider = GetComponentInChildren<BoxCollider>();
@@ -55,6 +60,7 @@ public class Enemy : MonoBehaviour
 
     private void ChasePlayer()
     {
+        if (!player) return;
         agent.SetDestination(player.position);
         animator.SetBool("isRunning", true);
         animator.SetBool("isAttacking", false);
@@ -62,6 +68,7 @@ public class Enemy : MonoBehaviour
 
     private void AttackPlayer()
     {
+        if (!player) return;
         if (!alreadyAttacked && health > 0)
         {
             // Make sure enemy doesn't move

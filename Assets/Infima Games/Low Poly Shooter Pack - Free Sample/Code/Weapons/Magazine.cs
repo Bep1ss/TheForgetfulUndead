@@ -23,6 +23,9 @@ namespace InfimaGames.LowPolyShooterPack
         [SerializeField]
         private Sprite sprite;
 
+        [SerializeField]
+        private bool InfiniteAmmo;
+
         #endregion
 
         #region GETTERS
@@ -31,6 +34,9 @@ namespace InfimaGames.LowPolyShooterPack
         /// Ammunition Total.
         /// </summary>
         public override int GetAmmunitionTotal() => ammunitionTotal;
+
+        public override bool GetInfiniteReload() => InfiniteAmmo;
+
         /// <summary>
         /// Sprite.
         /// </summary>

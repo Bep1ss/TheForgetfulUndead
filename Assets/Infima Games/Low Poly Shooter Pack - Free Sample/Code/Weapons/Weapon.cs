@@ -103,6 +103,8 @@ namespace InfimaGames.LowPolyShooterPack
 
         public int reloadAmmunition;
 
+
+
         #region Attachment Behaviours
 
         /// <summary>
@@ -129,6 +131,8 @@ namespace InfimaGames.LowPolyShooterPack
         /// The player character's camera.
         /// </summary>
         private Transform playerCamera;
+
+        public bool infiniteReload;
         
         #endregion
 
@@ -136,6 +140,8 @@ namespace InfimaGames.LowPolyShooterPack
         
         protected override void Awake()
         {
+            //infiniteReload = GetInfiniteReload();
+            //Debug.LogError(GetInfiniteReload());
             //Get Animator.
             animator = GetComponent<Animator>();
             //Get Attachment Manager.
@@ -158,6 +164,7 @@ namespace InfimaGames.LowPolyShooterPack
             muzzleBehaviour = attachmentManager.GetEquippedMuzzle();
 
             #endregion
+            Debug.LogError(GetInfiniteReload());
 
             //Max Out Ammo.
             ammunitionCurrent = magazineBehaviour.GetAmmunitionTotal();
@@ -184,6 +191,9 @@ namespace InfimaGames.LowPolyShooterPack
         public override int GetAmmunitionCurrent() => ammunitionCurrent;
 
         public override int GetAmmunitionTotal() => magazineBehaviour.GetAmmunitionTotal();
+
+        public override bool GetInfiniteReload() => magazineBehaviour.GetInfiniteReload();
+
 
         public override bool IsAutomatic() => automatic;
         public override float GetRateOfFire() => roundsPerMinutes;
@@ -241,9 +251,21 @@ namespace InfimaGames.LowPolyShooterPack
 
         public override void FillAmmunition(int amount)
         {
-            //Update the value by a certain amount.
-            ammunitionCurrent = amount != 0 ? Mathf.Clamp(ammunitionCurrent + amount, 
-                0, GetAmmunitionTotal()) : magazineBehaviour.GetAmmunitionTotal();
+
+            if (GetInfiniteReload())
+            {
+                // If infiniteReload is true, fill ammunitionCurrent as usual
+                ammunitionCurrent = amount != 0 ? Mathf.Clamp(ammunitionCurrent + amount,
+                    0, GetAmmunitionTotal()) : magazineBehaviour.GetAmmunitionTotal();
+            }
+            else
+            {
+                // If infiniteReload is false, use reloadAmount to fill ammunitionCurrent
+                int maxAmmunition = GetAmmunitionTotal();
+                int amountToAdd = Mathf.Min(reloadAmmunition, amount != 0 ? amount : maxAmmunition - ammunitionCurrent);
+                ammunitionCurrent = Mathf.Clamp(ammunitionCurrent + amountToAdd, 0, maxAmmunition);
+                reloadAmmunition -= amountToAdd; 
+            }
         }
 
         public override void EjectCasing()

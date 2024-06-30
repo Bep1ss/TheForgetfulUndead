@@ -70,6 +70,8 @@ namespace InfimaGames.LowPolyShooterPack
         /// Returns Current Ammunition. 
         /// </summary>
         public abstract int GetAmmunitionCurrent();
+
+        public abstract bool GetInfiniteReload();
         /// <summary>
         /// Returns Total Ammunition.
         /// </summary>
