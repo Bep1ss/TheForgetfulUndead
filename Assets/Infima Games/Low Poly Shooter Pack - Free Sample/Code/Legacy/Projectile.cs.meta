@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 02ff3ea705a4a7244a59eef82e75c660
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - bloodImpactParticleSystem: {fileID: 6193473405906388149, guid: fb206034f39b35041af858d21eef0c8f,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
